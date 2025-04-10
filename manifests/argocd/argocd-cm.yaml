@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://localhost:8080  # Update to your domain
+  dex.config: |
+    connectors:
+    - type: oidc
+      id: azure
+      name: Azure AD
+      config:
+        issuer: https://login.microsoftonline.com/b0706802-7182-4920-aa2e-54390fc5fa2e/v2.0
+        clientID: 8e4d8db1-94a2-440e-b3ef-77c2a5eca3f8
+        clientSecret: d9b6b462-6ff8-4da6-a9ae-b288defefab2
+        redirectURI: https://localhost:8080/auth/callback
+        scopes:
+          - openid
+          - profile
+          - email
+          - groups
+        requestedIDTokenClaims:
+          groups:
+            essential: true
